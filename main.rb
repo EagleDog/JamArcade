@@ -8,6 +8,9 @@
 # require "gosu"
 require_relative 'chingu/chingu'
 require_relative 'master/master'
+require_relative 'calm/loader'
+require_relative 'peeve/loader'
+require_relative 'relax/loader'
 
 module Colors   # colors
   White = Gosu::Color::WHITE
@@ -26,7 +29,7 @@ class Game < Chingu::Window
     self.input = { :esc => :exit,  # global controls
 #                   :p => Pause,
                    :q => :pop,
-#                   :z => :log,
+                   :l => :log,
 #                   :r => lambda{current_game_state.setup}
                    :z => :calm,
                    :x => :peeve,
@@ -39,8 +42,16 @@ class Game < Chingu::Window
     push_game_state(MasterMenu)
   end
 
+  def log
+    puts(game_states)
+  end
+
   def pop
-    pop_game_state
+    if game_states != 'MasterMenu'
+      pop_game_state(:setup => true)
+    else
+      exit
+    end
   end
 
   def calm

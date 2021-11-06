@@ -5,10 +5,14 @@ class MasterMenu < Chingu::GameState
   trait :timer
   def initialize
     super
+
 #    self.input = { [:enter, :return] => :proceed, :p => Pause, :r => lambda{current_game_state.setup}, :n => :next }
   end
 
   def setup
+    $window.width = 1100
+    $window.height = 700
+
     Chingu::Text.destroy_all # destroy any previously existing Text, Player, EndPlayer, and Meteors
     $window.caption = "          MASTER MENU"
     @click = Gosu::Sound["pickup_chime.ogg"]
