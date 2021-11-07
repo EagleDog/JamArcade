@@ -11,6 +11,7 @@ require_relative 'master/master'
 require_relative 'calm/loader'
 require_relative 'peeve/loader'
 require_relative 'relax/loader'
+require_relative 'butterfly/loader'
 
 module Colors   # colors
   White = Gosu::Color::WHITE
@@ -33,7 +34,8 @@ class Game < Chingu::Window
 #                   :r => lambda{current_game_state.setup}
                    :z => :calm,
                    :x => :peeve,
-                   :c => :relax
+                   :c => :relax,
+                   :v => :butterfly
                }
 #    retrofy
   end
@@ -64,6 +66,10 @@ class Game < Chingu::Window
 
   def relax
     push_game_state(Opening1)
+  end
+
+  def butterfly
+    push_game_state(ButterflySurfer)
   end
 
 

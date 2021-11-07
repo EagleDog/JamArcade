@@ -11,7 +11,7 @@ class Butterfly
     @velocity_x = 0
     @velocity_y = 0
     @window = window
-    @sprites = Gosu::Image.load_tiles('butterfly.png', 32, 32)
+    @sprites = Gosu::Image.load_tiles('butterfly/butterfly.png', 32, 32)
     @frames_elapsed = 0
     @sprite_index = 0
   end
@@ -28,10 +28,10 @@ class Butterfly
   end
 
   def update
-    accelerate_up if window.button_down?(Gosu::KbUp) || window.button_down?(Gosu::KbW)
-    accelerate_right if window.button_down?(Gosu::KbRight) || window.button_down?(Gosu::KbD)
-    accelerate_down if window.button_down?(Gosu::KbDown) || window.button_down?(Gosu::KbS)
-    accelerate_left if window.button_down?(Gosu::KbLeft) || window.button_down?(Gosu::KbA)
+    accelerate_up if $window.button_down?(Gosu::KbUp) || $window.button_down?(Gosu::KbW)
+    accelerate_right if $window.button_down?(Gosu::KbRight) || $window.button_down?(Gosu::KbD)
+    accelerate_down if $window.button_down?(Gosu::KbDown) || $window.button_down?(Gosu::KbS)
+    accelerate_left if $window.button_down?(Gosu::KbLeft) || $window.button_down?(Gosu::KbA)
 
     @x += @velocity_x
     @y += @velocity_y

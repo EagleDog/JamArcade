@@ -1,11 +1,12 @@
-require 'gosu'
+# require 'gosu'
 require_relative 'butterfly.rb'
 require_relative 'point.rb'
 require_relative 'body.rb'
 
 # MAJOR REFACTOR NEEDED
 
-class ButterflySurfer < Gosu::Window
+#class ButterflySurfer < Gosu::Window
+class ButterflySurfer < Chingu::GameState
   SELECTED_OPTION_COLOR = Gosu::Color::rgba(234, 242, 0, 255)
   UNSELECTED_OPTION_COLOR = Gosu::Color::rgba(255, 255, 255, 255)
   WHITE = Gosu::Color::rgba(255, 255, 255, 255)
@@ -16,9 +17,11 @@ class ButterflySurfer < Gosu::Window
   attr_reader :bodies, :butterfly, :big_font, :option_font, :main_menu_options, :post_game_menu_options, :main_menu_music, :game_music, :death_sound, :beep_sound
 
   def initialize
-    super(800,600)
-    self.fullscreen = false
-    self.caption = 'Butterfly Surfer'
+    super #(800,600)
+    $window.width = 800
+    $window.height = 600
+    $window.fullscreen = false
+    $window.caption = 'Butterfly Surfer'
     @big_font = Gosu::Font.new(40, name: 'Courier New')
     @option_font = Gosu::Font.new(20, name: 'Courier New')
 
@@ -38,13 +41,20 @@ class ButterflySurfer < Gosu::Window
 
     @menu_index = 0
 
-    @game_music = Gosu::Song.new('sounds/through space.ogg')
-    @main_menu_music = Gosu::Song.new('sounds/space.flac')
-    @death_sound = Gosu::Sample.new('sounds/atari_boom3.wav')
-    @beep_sound = Gosu::Sample.new('sounds/beep.wav')
+    @game_music = Gosu::Song.new('butterfly/sounds/through_space.ogg')
+    @main_menu_music = Gosu::Song.new('butterfly/sounds/space.flac')
+    @death_sound = Gosu::Sample.new('butterfly/sounds/atari_boom3.wav')
+    @beep_sound = Gosu::Sample.new('butterfly/sounds/beep.wav')
 
     reset_game
   end
+
+  def setup
+    $window.width = 800
+    $window.height = 600
+    $window.caption = 'Butterfly Surfer'
+  end
+
 
   def update
     if game_active
@@ -53,7 +63,7 @@ class ButterflySurfer < Gosu::Window
       butterfly.update
     end
 
-    update_position(update_interval / 1000)
+    update_position($window.update_interval / 1000)
     points.each { |point| point.update }
     bodies.each { |body| body.update }
 
@@ -110,24 +120,24 @@ class ButterflySurfer < Gosu::Window
   end
 
   def toggle_fullscreen
-    self.fullscreen = !self.fullscreen?
-    main_menu_options[2][:text] = self.fullscreen? ? 'Exit Fullscreen' : 'Fullscreen'
+    $window.fullscreen = !$window.fullscreen?
+    main_menu_options[2][:text] = $window.fullscreen? ? 'Exit Fullscreen' : 'Fullscreen'
   end
 
   def draw_alert_window
-    draw_quad(100, 300, BLACK, 700, 300, BLACK, 700, 575, BLACK, 100, 575, BLACK, 3)
-    draw_line(100, 300, WHITE, 700, 300, WHITE, 4)
-    draw_line(700, 300, WHITE, 700, 575, WHITE, 4)
-    draw_line(700, 575, WHITE, 100, 575, WHITE, 4)
-    draw_line(100, 575, WHITE, 100, 300, WHITE, 4)
+    $window.draw_quad(100, 300, BLACK, 700, 300, BLACK, 700, 575, BLACK, 100, 575, BLACK, 3)
+    $window.draw_line(100, 300, WHITE, 700, 300, WHITE, 4)
+    $window.draw_line(700, 300, WHITE, 700, 575, WHITE, 4)
+    $window.draw_line(700, 575, WHITE, 100, 575, WHITE, 4)
+    $window.draw_line(100, 575, WHITE, 100, 300, WHITE, 4)
   end
 
   def draw_credits_window
-    draw_quad(50, 240, BLACK, 750, 240, BLACK, 750, 575, BLACK, 50, 575, BLACK, 3)
-    draw_line(50, 240, WHITE, 750, 240, WHITE, 4)
-    draw_line(750, 240, WHITE, 750, 575, WHITE, 4)
-    draw_line(750, 575, WHITE, 50, 575, WHITE, 4)
-    draw_line(50, 575, WHITE, 50, 240, WHITE, 4)
+    $window.draw_quad(50, 240, BLACK, 750, 240, BLACK, 750, 575, BLACK, 50, 575, BLACK, 3)
+    $window.draw_line(50, 240, WHITE, 750, 240, WHITE, 4)
+    $window.draw_line(750, 240, WHITE, 750, 575, WHITE, 4)
+    $window.draw_line(750, 575, WHITE, 50, 575, WHITE, 4)
+    $window.draw_line(50, 575, WHITE, 50, 240, WHITE, 4)
   end
 
   def draw_how_to_play
@@ -325,9 +335,9 @@ class ButterflySurfer < Gosu::Window
   end
 
   def points
-    @points ||= (0..800).to_a.map { |x| Point.new(x, rand(0..600)) }
+    @points ||= (0..800).to_a.map { |x| Point1.new(x, rand(0..600)) }
   end
 end
 
-window = ButterflySurfer.new
-window.show
+#window = ButterflySurfer.new
+#window.show

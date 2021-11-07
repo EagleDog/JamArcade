@@ -1,4 +1,4 @@
-class Point
+class Point1
   COLOR = Gosu::Color::rgba(255, 255, 255, 255)
 
   attr_reader :x, :y

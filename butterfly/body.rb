@@ -9,7 +9,7 @@ class Body
     @x_accel = opts[:x_accel]
     @y_accel = opts[:y_accel]
     @mass = opts[:mass]
-    @sun_sprites = Gosu::Image.load_tiles('sun.png', 32, 32)
+    @sun_sprites = Gosu::Image.load_tiles('butterfly/sun.png', 32, 32)
     @frames_elapsed = 0
     @sprite_index = 0
   end
