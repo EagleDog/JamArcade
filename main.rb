@@ -7,7 +7,7 @@
 
 # require "gosu"
 require_relative 'chingu/chingu'
-require_relative 'master/master'
+require_relative 'master'
 require_relative 'calm/loader'
 require_relative 'peeve/loader'
 require_relative 'relax/loader'

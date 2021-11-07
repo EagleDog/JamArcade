@@ -5,19 +5,21 @@ class MasterMenu < Chingu::GameState
   trait :timer
   def initialize
     super
-    self.input = { :up => :go_up, :down => :go_down, [:enter, :return] => :choose_game }
-#    self.input = { [:enter, :return] => :proceed, :p => Pause, :r => lambda{current_game_state.setup}, :n => :next }
+    self.input = { :up => :go_up, :down => :go_down,
+      [:enter, :return] => :choose_game }
+#   self.input = { [:enter, :return] => :proceed, :p => Pause, :r => lambda{current_game_state.setup}, :n => :next }
   end
 
   def setup
     $window.width = 1100
     $window.height = 700
 
-    Chingu::Text.destroy_all # destroy any previously existing Text, Player, EndPlayer, and Meteors
+    Chingu::Text.destroy_all # destroy any existing Text
     $window.caption = "          MASTER MENU"
-    @click = Gosu::Sound["pickup_chime.ogg"]
+    @click = Gosu::Sound["beep.wav"]
+    @chime = Gosu::Sound["pickup_chime.ogg"]
 
-    # @main_menu_options = [
+    # @games = [ calm
     #   { text: 'Play', method: :start_game },
     #   { text: 'How To Play', method: :display_how_to_play },
     #   { text: 'Fullscreen', method: :toggle_fullscreen },
@@ -25,31 +27,47 @@ class MasterMenu < Chingu::GameState
     #   { text: 'Quit', method: :quit }
     # ]
 
-    @games = ['Calm', 'Peeve', 'Relax', 'Butterfly']
-    @selection = 1
+    @games = [:calm, :peeve, :relax, :butterfly]
+    @menu_index = 0
     make_text
-    @texts = [@text1, @text2, @text3]
+    after(1000) { @text_exists = true 
+      @texts = [@text1, @text2, @text3, @text4] }
   end
 
   def go_up
-    # beep_sound.play
-    # self.menu_index -= 1
-    # self.menu_index = menu.length - 1 if menu_index < 0
+    @click.play
+    @menu_index -= 1
+    @menu_index = @texts.length - 1 if @menu_index < 0
   end
 
   def go_down
-
+    @click.play
+    @menu_index += 1
+    @menu_index = 0 if @menu_index > @texts.length - 1
   end
 
   def choose_game
-
+    @chime.play
+    self.send(@games[@menu_index])
+    @menu_index = 0
   end
 
-  def highlight_text
-    @texts[@selection - 1].size = 60
-  end
   def unhighlight_text
-    @texts[@selection - 1].size = 45
+    @texts.each do |text| text.factor = 1 end
+    # @text1.factor_x = 1
+    # @text1.factor_y = 1
+#    @text1.x = 300
+  end
+  def highlight_text
+    @texts[@menu_index].factor = 1.2
+    #@texts[@menu_index].factor_y = 1.4
+  end
+
+  def update
+    if @text_exists == true
+      unhighlight_text
+      highlight_text
+    end
   end
 
 
@@ -67,6 +85,24 @@ class MasterMenu < Chingu::GameState
       #   self.send(menu[menu_index][:method])
       #   self.menu_index = 0
       # end
+
+  def calm
+    push_game_state(Calm)
+  end
+
+  def peeve
+    push_game_state(Peeve)
+  end
+
+  def relax
+    push_game_state(Opening1)
+  end
+
+  def butterfly
+    push_game_state(ButterflySurfer)
+  end
+
+
 
   def make_text
     after(100) {
@@ -100,6 +136,5 @@ class MasterMenu < Chingu::GameState
       @text4.x = 200 #1100/2 - @text2.width/2 # center text
     }
   end
-
 
 end
