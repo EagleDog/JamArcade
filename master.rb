@@ -33,11 +33,11 @@ class MasterMenu < Chingu::GameState
     #   { text: 'Quit', method: :quit }
     # ]
 
-    @games = [:calm, :peeve, :relax, :butterfly, :boxes]
+    @games = [:calm, :peeve, :relax, :butterfly, :boxes, :penguin]
     @menu_index = 0
     make_text
     after(500) { @text_exists = true
-      @texts = [@text1, @text2, @text3, @text4, @text5] }
+      @texts = [@text1, @text2, @text3, @text4, @text5, @text6] }
   end
 
   def go_up
@@ -88,7 +88,8 @@ class MasterMenu < Chingu::GameState
   def boxes
     push_game_state(Boxes)
   end
-  def penquin
+  def penguin
+    push_game_state(PenguinGame)
   end
   def bricks
   end
@@ -105,7 +106,7 @@ class MasterMenu < Chingu::GameState
   def make_text
     after(50) {
       @text = Chingu::Text.create("Master Menu",
-        :y => 125, :font => "GeosansLight", :size => 70,
+        :y => 50, :font => "GeosansLight", :size => 70,
         :color => Colors::White, :zorder => 10)
       @text.x = 1100/2 - @text.width/2 # center text
     }
@@ -138,6 +139,12 @@ class MasterMenu < Chingu::GameState
         :y => 500, :font => "GeosansLight", :size => 45,
         :color => Colors::White, :zorder => 10)
       @text5.x = 200 #1100/2 - @text2.width/2 # center text
+    }
+    after(350) {
+      @text6 = Chingu::Text.create("Chaos Penguin",
+        :y => 575, :font => "GeosansLight", :size => 45,
+        :color => Colors::White, :zorder => 10)
+      @text6.x = 200 #1100/2 - @text2.width/2 # center text
     }
   end
 

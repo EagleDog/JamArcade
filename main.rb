@@ -13,6 +13,7 @@ require_relative 'peeve/loader'
 require_relative 'relax/loader'
 require_relative 'butterfly/loader'
 require_relative 'boxes/loader'
+require_relative 'penguin/loader'
 
 module Colors   # colors
   White = Gosu::Color::WHITE
@@ -37,7 +38,8 @@ class Game < Chingu::Window
                    :x => :peeve,
                    :c => :relax,
                    :v => :butterfly,
-                   :b => :boxes
+                   :b => :boxes,
+                   :n => :penguin
                }
 #    retrofy
   end
@@ -73,7 +75,8 @@ class Game < Chingu::Window
   def boxes
     push_game_state(Boxes)
   end
-  def penquin
+  def penguin
+    push_game_state(PenguinGame)
   end
   def bricks
   end
