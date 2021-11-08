@@ -12,6 +12,7 @@ require_relative 'calm/loader'
 require_relative 'peeve/loader'
 require_relative 'relax/loader'
 require_relative 'butterfly/loader'
+require_relative 'boxes/loader'
 
 module Colors   # colors
   White = Gosu::Color::WHITE
@@ -27,15 +28,16 @@ class Game < Chingu::Window
   def initialize
     super(1100,700,false) #640, 480
     self.caption = "          JAM ARCADE"
-    self.input = { :esc => :exit,  # global controls
-#                   :p => Pause,
-                   :q => :pop,
-                   :l => :log,
+    self.input = { :esc => :pop,  # global controls
+                   :p => Pause,   # Pause not working
+#                   :q => :pop,
+#                   :l => :log,
 #                   :r => lambda{current_game_state.setup}
                    :z => :calm,
                    :x => :peeve,
                    :c => :relax,
-                   :v => :butterfly
+                   :v => :butterfly,
+                   :b => :boxes
                }
 #    retrofy
   end
@@ -59,20 +61,61 @@ class Game < Chingu::Window
   def calm
     push_game_state(Calm)
   end
-
   def peeve
     push_game_state(Peeve)
   end
-
   def relax
     push_game_state(Opening1)
   end
-
   def butterfly
     push_game_state(ButterflySurfer)
   end
+  def boxes
+    push_game_state(Boxes)
+  end
+  def penquin
+  end
+  def bricks
+  end
+  def scheduler
+  end
 
 
+  def pause_game
+    if current_game_state.to_s != Pause
+      push_game_state(Pause)
+    end
+  end
 end
+
+#
+#  PAUSE GAMESTATE
+#    press 'P' to pause (currently doesn't work)
+class Pause <  Chingu::GameState
+  def setup #(options = {})
+#    super
+    @title = Chingu::Text.create(:text=>"PAUSED (press 'P' to un-pause)", :y=>110, :size=>30, :color => Colors::White, :zorder=>1000 )
+    @title.x = 400 - @title.width/2
+    @title2 = Chingu::Text.create(:text=>"PAUSED (press 'P' to un-pause)", :y=>110 + 3, :size=>30, :color => Colors::Black, :zorder=>900 )
+    @title2.x = 400 - @title.width/2 + 3
+    self.input = { :p => :un_pause, :r => :reset, :n => :next }
+#    $music.pause
+  end
+  def un_pause
+#    $music.play
+    pop_game_state(:setup => false)    # Return the previous game state, dont call setup()
+  end
+  def reset  # pressing 'r' resets the gamestate
+    pop_game_state(:setup => true)
+  end
+  def next
+    push_game_state(Introduction)
+  end
+  def draw
+    previous_game_state.draw    # Draw prev game state onto screen (in this case our level)
+    super                       # Draw game objects in current game state, this includes Chingu::Texts
+  end
+end
+
 
 Game.new.show # if __FILE__ == $0

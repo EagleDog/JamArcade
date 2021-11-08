@@ -5,14 +5,17 @@ class MasterMenu < Chingu::GameState
   trait :timer
   def initialize
     super
-    self.input = { :up => :go_up, :down => :go_down,
+    self.input = { [:up, :w] => :go_up,
+      [:down, :s] => :go_down,
+      [:right, :d] => :go_fullscreen,
+      [:left, :a] => :leave_fullscreen,
       [:enter, :return] => :choose_game }
-#   self.input = { [:enter, :return] => :proceed, :p => Pause, :r => lambda{current_game_state.setup}, :n => :next }
   end
 
   def setup
     $window.width = 1100
     $window.height = 700
+    $window.cursor = false
     $music = Gosu::Song["butterfly/sounds/space.flac"]
     $music.volume = 0.3
     $music.play(true)
@@ -30,11 +33,11 @@ class MasterMenu < Chingu::GameState
     #   { text: 'Quit', method: :quit }
     # ]
 
-    @games = [:calm, :peeve, :relax, :butterfly]
+    @games = [:calm, :peeve, :relax, :butterfly, :boxes]
     @menu_index = 0
     make_text
-    after(1000) { @text_exists = true 
-      @texts = [@text1, @text2, @text3, @text4] }
+    after(500) { @text_exists = true
+      @texts = [@text1, @text2, @text3, @text4, @text5] }
   end
 
   def go_up
@@ -57,9 +60,6 @@ class MasterMenu < Chingu::GameState
 
   def unhighlight_text
     @texts.each do |text| text.factor = 1 end
-    # @text1.factor_x = 1
-    # @text1.factor_y = 1
-#    @text1.x = 300
   end
   def highlight_text
     @texts[@menu_index].factor = 1.2
@@ -73,70 +73,71 @@ class MasterMenu < Chingu::GameState
     end
   end
 
-
-      # case key
-      # when Gosu::KbUp, Gosu::KbW
-      #   beep_sound.play
-      #   self.menu_index -= 1
-      #   self.menu_index = menu.length - 1 if menu_index < 0
-      # when Gosu::KbDown, Gosu::KbS
-      #   beep_sound.play
-      #   self.menu_index += 1
-      #   self.menu_index = 0 if menu_index > menu.length - 1
-      # when Gosu::KbReturn, Gosu::KbSpace
-      #   beep_sound.play
-      #   self.send(menu[menu_index][:method])
-      #   self.menu_index = 0
-      # end
-
   def calm
     push_game_state(Calm)
   end
-
   def peeve
     push_game_state(Peeve)
   end
-
   def relax
     push_game_state(Opening1)
   end
-
   def butterfly
     push_game_state(ButterflySurfer)
   end
+  def boxes
+    push_game_state(Boxes)
+  end
+  def penquin
+  end
+  def bricks
+  end
+  def scheduler
+  end
 
-
+  def go_fullscreen
+    $window.fullscreen = true
+  end
+  def leave_fullscreen
+    $window.fullscreen = false
+  end
 
   def make_text
-    after(100) {
+    after(50) {
       @text = Chingu::Text.create("Master Menu",
-        :y => 150, :font => "GeosansLight", :size => 70,
+        :y => 125, :font => "GeosansLight", :size => 70,
         :color => Colors::White, :zorder => 10)
       @text.x = 1100/2 - @text.width/2 # center text
     }
-    after(200) {
+    after(100) {
       @text1 = Chingu::Text.create("Keep Calm and Balance",
-        :y => 250, :font => "GeosansLight", :size => 45,
+        :y => 200, :font => "GeosansLight", :size => 45,
         :color => Colors::White, :zorder => 10)
       @text1.x = 200 #1100/2 - @text2.width/2 # center text
     }
-    after(300) {
+    after(150) {
       @text2 = Chingu::Text.create("Pet Peeve",
-        :y => 350, :font => "GeosansLight", :size => 45,
+        :y => 275, :font => "GeosansLight", :size => 45,
         :color => Colors::White, :zorder => 10)
       @text2.x = 200 #1100/2 - @text2.width/2 # center text
     }
-    after(400) {
+    after(200) {
       @text3 = Chingu::Text.create("Relax",
-        :y => 450, :font => "GeosansLight", :size => 45,
+        :y => 350, :font => "GeosansLight", :size => 45,
         :color => Colors::White, :zorder => 10)
       @text3.x = 200 #1100/2 - @text2.width/2 # center text
     }
-    after(500) {
+    after(250) {
       @text4 = Chingu::Text.create("Butterfly Surfer",
-        :y => 550, :font => "GeosansLight", :size => 45,
+        :y => 425, :font => "GeosansLight", :size => 45,
         :color => Colors::White, :zorder => 10)
       @text4.x = 200 #1100/2 - @text2.width/2 # center text
+    }
+    after(300) {
+      @text5 = Chingu::Text.create("Boxes",
+        :y => 500, :font => "GeosansLight", :size => 45,
+        :color => Colors::White, :zorder => 10)
+      @text5.x = 200 #1100/2 - @text2.width/2 # center text
     }
   end
 

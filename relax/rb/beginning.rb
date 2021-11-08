@@ -43,7 +43,9 @@ end
 class Opening1 <  Chingu::GameState
   trait :timer
   def setup
-    puts "opening1"
+    $window.width = 1100
+    $window.height = 700
+#    puts "opening1"
     self.input = { :esc => :exit, [:enter, :return] => :intro, :p => Pause, :r => lambda{current_game_state.setup}, :n => :next }
     $music = Gosu::Song["relax/assets/audio/intro_song.ogg"]
     $music.volume = 0.7 #0.9
@@ -218,30 +220,30 @@ def update
 end
 
 
-#
-#  PAUSE GAMESTATE
-#    pressing 'P' at any time pauses current gamestate (except possibly during fades)
-class Pause <  Chingu::GameState
-  def initialize(options = {})
-    super
-    @title = Chingu::Text.create(:text=>"PAUSED (press 'P' to un-pause)", :y=>110, :size=>30, :color => Colors::Dark_Orange, :zorder=>1000 )
-    @title.x = 400 - @title.width/2
-    self.input = { :p => :un_pause, :r => :reset, :n => :next }
-    $music.pause
-  end
-  def un_pause
-    $music.play
-    pop_game_state(:setup => false)    # Return the previous game state, dont call setup()
-  end
-  def reset  # pressing 'r' resets the gamestate
-    pop_game_state(:setup => true)
-  end
-  def next
-    push_game_state(Introduction)
-  end
-  def draw
-    previous_game_state.draw    # Draw prev game state onto screen (in this case our level)
-    super                       # Draw game objects in current game state, this includes Chingu::Texts
-  end
-end
+# #
+# #  PAUSE GAMESTATE
+# #    pressing 'P' at any time pauses current gamestate (except possibly during fades)
+# class Pause <  Chingu::GameState
+#   def initialize(options = {})
+#     super
+#     @title = Chingu::Text.create(:text=>"PAUSED (press 'P' to un-pause)", :y=>110, :size=>30, :color => Colors::Dark_Orange, :zorder=>1000 )
+#     @title.x = 400 - @title.width/2
+#     self.input = { :p => :un_pause, :r => :reset, :n => :next }
+#     $music.pause
+#   end
+#   def un_pause
+#     $music.play
+#     pop_game_state(:setup => false)    # Return the previous game state, dont call setup()
+#   end
+#   def reset  # pressing 'r' resets the gamestate
+#     pop_game_state(:setup => true)
+#   end
+#   def next
+#     push_game_state(Introduction)
+#   end
+#   def draw
+#     previous_game_state.draw    # Draw prev game state onto screen (in this case our level)
+#     super                       # Draw game objects in current game state, this includes Chingu::Texts
+#   end
+# end
 
