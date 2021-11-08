@@ -49,10 +49,10 @@ class Game < Chingu::Window
   end
 
   def pop
-    if current_game_state != 'MasterMenu'
+    if current_game_state.to_s != 'MasterMenu'
       pop_game_state(:setup => true)
     else
-      $window.exit
+      exit
     end
   end
 

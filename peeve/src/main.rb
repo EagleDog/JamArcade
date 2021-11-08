@@ -1,4 +1,4 @@
-require 'gosu'
+#require 'gosu'
 require_relative 'engine/entity'
 require_relative 'engine/transition'
 require_relative 'entities/cat'
@@ -43,7 +43,7 @@ class Peeve < Chingu::GameState
 
   def update
     if Gosu.button_down?(Gosu::KB_J)
-      self.fullscreen = !fullscreen?
+      $window.fullscreen = !$window.fullscreen?
       sleep 1 # really rubbish debounce
     end
 

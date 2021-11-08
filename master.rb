@@ -13,10 +13,13 @@ class MasterMenu < Chingu::GameState
   def setup
     $window.width = 1100
     $window.height = 700
+    $music = Gosu::Song["butterfly/sounds/space.flac"]
+    $music.volume = 0.3
+    $music.play(true)
 
     Chingu::Text.destroy_all # destroy any existing Text
     $window.caption = "          MASTER MENU"
-    @click = Gosu::Sound["beep.wav"]
+    @click = Gosu::Sound["click.ogg"]
     @chime = Gosu::Sound["pickup_chime.ogg"]
 
     # @games = [ calm
