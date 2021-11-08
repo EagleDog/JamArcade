@@ -7,6 +7,7 @@
 
 # require "gosu"
 require_relative 'chingu/chingu'
+require_relative 'chingu/resurrection'
 require_relative 'master'
 require_relative 'calm/loader'
 require_relative 'butterfly/loader'
@@ -25,7 +26,7 @@ module Colors   # colors
 end
 
 
-class Game < Chingu::Window
+class Arcade < Chingu::Window
   # trait :debug => true
 
   def initialize
@@ -34,7 +35,7 @@ class Game < Chingu::Window
     self.input = { :esc => :pop,  # global controls
                    :p => Pause,   # Pause not working
                    :g => :gamestate_logger,
-#                   :r => lambda{current_game_state.setup},
+                   :r => Resurrection,
                    :z => Calm,
                    :v => ButterflySurfer,
                    :x => Peeve,
@@ -48,7 +49,8 @@ class Game < Chingu::Window
   end
 
   def setup
-    push_game_state(MasterMenu)
+#    push_game_state(MasterMenu)
+    push_game_state(Resurrection)
   end
 
   def gamestate_logger
@@ -63,31 +65,9 @@ class Game < Chingu::Window
     end
   end
 
-  # def calm
-  #   push_game_state(Calm)
-  # end
-  # def peeve
-  #   push_game_state(Peeve)
-  # end
   def relax
     push_game_state(Opening1)
   end
-  # def butterfly
-  #   push_game_state(ButterflySurfer)
-  # end
-  # def boxes
-  #   push_game_state(Boxes)
-  # end
-  # def bricks
-  #   push_game_state(BricksGame)
-  # end
-  # def penguin
-  #   push_game_state(PenguinGame)
-  # end
-  def scheduler
-    push_game_state(Scheduler)
-  end
-
 
   def pause_game
     if current_game_state.to_s != Pause
@@ -126,4 +106,4 @@ class Pause <  Chingu::GameState
 end
 
 
-Game.new.show # if __FILE__ == $0
+Arcade.new.show # if __FILE__ == $0

@@ -13,9 +13,9 @@ class Particle < Chingu::GameObject
     particle = "obj" + part_num.to_s
     @image = Gosu::Image.new("relax/assets/particles/" + particle + ".png")
     @color = Gosu::Color::BLACK.dup
-    @color.red = rand(256 - 150) + 120
-    @color.green = rand(256 - 150) + 120
-    @color.blue = rand(256 - 150) + 120
+    @color.red = rand(256 - 150) + 180
+    @color.green = rand(256 - 150) + 180
+    @color.blue = rand(256 - 150) + 180
     @color.alpha = 255
     @x = x
     @y = y
