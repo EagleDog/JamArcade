@@ -219,7 +219,7 @@ class Conveyor
   def eject_box(es)
     candidates = []
     @boxes.each do |box|
-      candidates.push box if box.x + Box::WIDTH >= es[:x] && box.x <= es[:x] + es[:w]
+      candidates.push box if box.x + Box1::WIDTH >= es[:x] && box.x <= es[:x] + es[:w]
     end
 
     unless candidates.empty?
@@ -232,7 +232,7 @@ class Conveyor
 
   def update
     to_delete = []
-    @entry_spot_available = @boxes.select {|box| box.x + Box::WIDTH >= @entry_spot_x}.empty?
+    @entry_spot_available = @boxes.select {|box| box.x + Box1::WIDTH >= @entry_spot_x}.empty?
 
     @boxes.each do |box| 
       if box.state == :on_conveyor
@@ -242,7 +242,7 @@ class Conveyor
       box.update
 
       # check for out of bounds box
-      if box.x + Box::WIDTH <= 0
+      if box.x + Box1::WIDTH <= 0
         $sounds[:box_missed].play
         to_delete.push box
         $main_score += $missed_score
@@ -269,7 +269,7 @@ class Conveyor
     @ejection_spots.each do |es| 
       color = Gosu::Color.new(255, 128, 128, 128)
       @boxes.each do |box|
-        if box.x + Box::WIDTH >= es[:x] && box.x <= es[:x] + es[:w]
+        if box.x + Box1::WIDTH >= es[:x] && box.x <= es[:x] + es[:w]
           color = Gosu::Color.new(255, 180, 180, 180)
           break
         end
@@ -316,11 +316,11 @@ class SpawnArea
 
   def spawn_box
     return false if @boxes.size + 1 >= @boxes_max
-    x = Gosu.random(@x, @x + @w - Box::WIDTH).floor
-    y = Gosu.random(@y, @y + @h - Box::HEIGHT).floor
+    x = Gosu.random(@x, @x + @w - Box1::WIDTH).floor
+    y = Gosu.random(@y, @y + @h - Box1::HEIGHT).floor
     spawn_x = x
     spawn_y = 10
-    box = Box.new(spawn_x, spawn_y)
+    box = Box1.new(spawn_x, spawn_y)
     box.set_destination(x, y)
     @boxes.push(box)
     $sounds[:alert].play(0.25, 0.75) if @boxes.size >= 18
@@ -343,7 +343,7 @@ class SpawnArea
   end
 end
 
-class Box
+class Box1
   attr_accessor :x, :y, :state, :color
   WIDTH = 48
   HEIGHT = 32
@@ -503,7 +503,7 @@ class Game1
       @gfx[:background].draw(0, 0, 0)
       @spawn_area.draw
       @conveyor.draw
-      Gosu.draw_rect(0, 0, @window.width, @window.height, Gosu::Color.new(128, 0, 0, 0), 10000)
+      Gosu.draw_rect(0, 0, $window.width, $window.height, Gosu::Color.new(128, 0, 0, 0), 10000)
       @font.draw_text('Game Over', 50, 50, 10001, 2, 2, Gosu::Color::WHITE)
       @font.draw_text('Press any key to restart', 50, 140, 10001, 1, 1, Gosu::Color::WHITE)
       @font.draw_text("Score : #{$main_score}", 50, 230, 10001, 2, 2, Gosu::Color::WHITE)
