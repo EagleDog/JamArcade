@@ -12,6 +12,7 @@ class Resurrection < Chingu::GameState
   def setup
     @graveyard = Gosu::Image.new("" + RBPTH + "graveyard.png")
     @tombstone = Gosu::Image.new("" + RBPTH + "tombstone.png")
+    @empty_grave = Gosu::Image.new("" + RBPTH + "empty_grave.png")
 
 #    @cracks = [@crack1, @crack2, @crack3]
 #    @chunks = [@chunk1, @chunk2, @chunk3, @chunk4, @chunk5]
@@ -74,6 +75,7 @@ class Resurrection < Chingu::GameState
     super
     @graveyard.draw(0, 0, Z::BACKGROUND)
     @tombstone.draw(380, 80, Z::BACKGROUND + 1)
+    @empty_grave.draw(380, 400, Z::BACKGROUND + 1)
   end
 
 end
