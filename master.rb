@@ -91,7 +91,7 @@ class MasterMenu < Chingu::GameState
   def make_text
     after(20) { @text = TitleText.create("Gosu Game Jam 2021", :size => 80, :y => 40)
       @text.x = 1100/2 - @text.width/2  }
-    after(100) { @text1 = MasterText.create("Keep Calm and Balance", :y => 150) }
+    after(100) { @text1 = MasterText.create("Keep Calm & Balance", :y => 150) }
     after(125) { @text2 = MasterText.create("Butterfly Surfer",      :y => 210) }
     after(155) { @text3 = MasterText.create("Pet Peeve",             :y => 270) }
     after(175) { @text4 = MasterText.create("Boxes",                 :y => 330) }
