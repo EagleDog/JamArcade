@@ -58,7 +58,9 @@ class MasterMenu < Chingu::GameState
   end
 
   def unhighlight_text
-    @texts.each do |text| text.factor = 1 end
+    @texts.each do |text|
+      text.factor = 1 if text.exists?
+    end
   end
 
   def highlight_text

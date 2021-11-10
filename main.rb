@@ -49,8 +49,8 @@ class Arcade < Chingu::Window
   end
 
   def setup
-    push_game_state(MasterMenu)
-#    push_game_state(Resurrection)
+#    push_game_state(MasterMenu)
+    push_game_state(Resurrection)
   end
 
   def gamestate_logger
