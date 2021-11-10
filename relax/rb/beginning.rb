@@ -45,6 +45,7 @@ class Opening1 <  Chingu::GameState
   def setup
     $window.width = 1100
     $window.height = 700
+    $window.caption = "      RELAX"
 #    puts "opening1"
     self.input = { [:enter, :return] => :intro, :p => Pause, :r => lambda{current_game_state.setup}, :n => :next }
     $music = Gosu::Song["relax/assets/audio/intro_song.ogg"]

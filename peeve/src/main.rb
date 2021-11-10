@@ -34,6 +34,7 @@ class Peeve < Chingu::GameState
     super #(1600, 900)
     $window.width = 1600
     $window.height = 900
+    $window.caption = "    Pet Peeve"
 
     @cat = Cat.new(Point.new(200, 200, 100))
     $world.cat = @cat
