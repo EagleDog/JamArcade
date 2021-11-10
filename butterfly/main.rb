@@ -20,7 +20,7 @@ class ButterflySurfer < Chingu::GameState
     super #(800,600)
     $window.width = 800
     $window.height = 600
-    $window.fullscreen = false
+#    $window.fullscreen = false
     $window.caption = 'Butterfly Surfer'
     @big_font = Gosu::Font.new(40, name: 'Courier New')
     @option_font = Gosu::Font.new(20, name: 'Courier New')
@@ -266,7 +266,8 @@ class ButterflySurfer < Chingu::GameState
   end
 
   def quit
-    close
+#    close
+    push_game_state(MasterMenu)
   end
 
   def formatted_body_values

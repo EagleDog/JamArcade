@@ -38,17 +38,17 @@ class Chunk < Chingu::GameObject
 
   def shake(dir)
     counter = 0
-    3.times {
+    27.times {
       counter += 40
-      after(counter) { self.angle += 2 * dir }
+      after(counter) { self.angle += 4 * dir }
       counter += 40
-      after(counter) { self.angle -= 4 * dir }
+      after(counter) { self.angle -= 5 * dir }
     }
   end
 
   def fling(dir)
-    @velocity_x = -3 * dir - rand(6)
-    @velocity_y = -4 - rand(10)
+    @velocity_x = -40 * dir - rand(6)
+    @velocity_y = -40 - rand(10)
   end
 
   def land
@@ -58,13 +58,6 @@ class Chunk < Chingu::GameObject
     @x = @x + @velocity_x
     @y = @y + @velocity_y 
   end
-
-#  def draw
-#    super
-#    @image.draw_rot(@x, @y, 20, @angle, @center_x, @center_y, 1.0, 1.0, @color)
-#                   [@x, @y, @angle, @center_x, @center_y, @factor_x, @factor_y, @color.dup, @mode, @zorder]
-#
-#  end
 
 end
 
@@ -93,11 +86,11 @@ class ChinguGem < Chingu::GameObject
   end
 
   def update
-    if @growing && @factor < 1
-      self.factor += 0.005
+    if @growing && @factor < 1.2
+      self.factor += 0.03
     end
     if @moving && self.y > 300
-      self.y -= 20
+      self.y -= 10
     end
   end
 

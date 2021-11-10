@@ -9,7 +9,7 @@ class MasterMenu < Chingu::GameState
       [:down, :s] => :go_down,
       [:right, :d] => :go_fullscreen,
       [:left, :a] => :leave_fullscreen,
-      [:enter, :return] => :choose_game }
+      [:enter, :return, :space] => :choose_game }
   end
 
   def setup
@@ -30,7 +30,7 @@ class MasterMenu < Chingu::GameState
     @games = [:calm, :butterfly, :peeve, :boxes,
               :relax, :scheduler, :bricks, :penguin  ]
     @texts = []
-    make_text
+    make_texts
 
     after(500) {  @texts_exist = true
         @texts = [@text1, @text2, @text3, @text4,
@@ -59,7 +59,7 @@ class MasterMenu < Chingu::GameState
 
   def unhighlight_text
     @texts.each do |text|
-      text.factor = 1 if text.exists?
+      text.factor = 1
     end
   end
 
@@ -90,7 +90,7 @@ class MasterMenu < Chingu::GameState
     $window.fullscreen = false
   end
 
-  def make_text
+  def make_texts
     after(20) { @text = TitleText.create("Gosu Game Jam 2021", :size => 80, :y => 40)
       @text.x = 1100/2 - @text.width/2  }
     after(100) { @text1 = MasterText.create("Keep Calm & Balance", :y => 150) }

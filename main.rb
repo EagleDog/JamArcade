@@ -30,7 +30,7 @@ class Arcade < Chingu::Window
   # trait :debug => true
 
   def initialize
-    super(1100,700,false) #640, 480
+    super(1100, 700, true) #640, 480
     self.caption = "          JAM ARCADE"
     self.input = { :esc => :pop,  # global controls
                    :p => Pause,   # Pause not working
