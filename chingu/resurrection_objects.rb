@@ -9,19 +9,40 @@
 class Rift < Chingu::GameObject
   trait :timer
   def tremble
-    after(20) {
-      after(50) { self.factor = 1.1 }
-      after(400) { self.factor = 0.9 }
-      after(480) { self.factor = 1.1 }
-      after(900) { self.factor = 1.2 }
-      after(950) { self.factor = 1.0 }
-      after(1050) { self.factor = 1.2 }
-      after(1350) { self.factor = 1.1 }
-      after(1400) { self.factor = 1.3 }
-      after(1450) { self.factor = 1.0 }
-      after(1500) { self.factor = 1.4 }
+    self.factor = 1.1
+    after(400) { self.factor = 0.9 }
+    after(480) { self.factor = 1.1 }
+    after(900) { self.factor = 1.2 }
+    after(950) { self.factor = 1.0 }
+    after(1050) { self.factor = 1.2 }
+    after(1350) { self.factor = 1.1 }
+    after(1400) { self.factor = 1.3 }
+    after(1450) { self.factor = 1.0 }
+    after(1500) { self.factor = 1.4 }
+  end
+  def tremble1
+    after(70) { tremble }
+  end
+  def tremble2
+    tremble
+  end
+  def tremble3
+    trembling
+    after(1000) { trembling }
+  end
+
+  def trembling
+    self.factor = 1.4
+    counter = 0
+    5.times {
+      counter += 40
+      after(counter) { self.factor = 1.5 }
+      counter += 40
+      after(counter) { self.factor = 1.4 }
     }
   end
+
+
 end
 
 class Rift1 < Rift; def setup; @image = Gosu::Image.new(""+RBPTH+"crack1.png"); end; end
@@ -34,21 +55,28 @@ class Chunk < Chingu::GameObject
     @color = 0xFFDDDDDD
     @velocity_x = 0
     @velocity_y = 0
+    @rand_x = 40
+    @rand_y = 30
   end
 
-  def shake(dir)
+  def shaking(dir)
     counter = 0
-    27.times {
-      counter += 40
-      after(counter) { self.angle += 4 * dir }
+    5.times {
       counter += 40
       after(counter) { self.angle -= 5 * dir }
+      counter += 40
+      after(counter) { self.angle += 3 * dir }
     }
   end
 
+  def shake(dir)
+    shaking(dir)
+    after(1000) { shaking(dir) }
+  end
+
   def fling(dir)
-    @velocity_x = -40 * dir - rand(6)
-    @velocity_y = -40 - rand(10)
+    @velocity_x = -rand(@rand_x) * dir
+    @velocity_y = -rand(@rand_y) - 20
   end
 
   def land
@@ -86,7 +114,7 @@ class ChinguGem < Chingu::GameObject
   end
 
   def update
-    if @growing && @factor < 1.2
+    if @growing && @factor < 1.3
       self.factor += 0.03
     end
     if @moving && self.y > 300
