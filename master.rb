@@ -74,14 +74,14 @@ class MasterMenu < Chingu::GameState
     end
   end
 
-  def calm;       push_game_state(Calm);             end
-  def butterfly;  push_game_state(ButterflySurfer);  end
-  def peeve;      push_game_state(Peeve);            end
-  def boxes;      push_game_state(Boxes);            end
-  def relax;      push_game_state(Opening1);         end
-  def scheduler;  push_game_state(Scheduler);        end
-  def bricks;     push_game_state(BricksGame);       end
-  def penguin;    push_game_state(PenguinGame);      end
+  def calm;       push_game_state(Calm);                  end
+  def butterfly;  push_game_state(ButterflySurfer);       end
+  def peeve;      push_game_state(Peeve);                 end
+  def boxes;      push_game_state(Boxes);                 end
+  def relax;      push_game_state(Opening1);              end
+  def scheduler;  push_game_state(SchedulerGame::Window); end
+  def bricks;     push_game_state(BricksGame);            end
+  def penguin;    push_game_state(PenguinGame);           end
 
   def go_fullscreen
     $window.fullscreen = true
@@ -93,13 +93,13 @@ class MasterMenu < Chingu::GameState
   def make_texts
     after(20) { @text = TitleText.create("Gosu Game Jam 2021", :size => 80, :y => 40)
       @text.x = 1100/2 - @text.width/2  }
-    after(100) { @text1 = MasterText.create("Keep Calm & Balance", :y => 150) }
+    after(100) { @text1 = MasterText.create("Keep Calm & Balance",   :y => 150) }
     after(125) { @text2 = MasterText.create("Butterfly Surfer",      :y => 210) }
     after(155) { @text3 = MasterText.create("Pet Peeve",             :y => 270) }
     after(175) { @text4 = MasterText.create("Boxes",                 :y => 330) }
     after(200) { @text5 = MasterText.create("Relax",                 :y => 390) }
-    after(225) { @text6 = MasterText.create("Scheduler (stub)",      :y => 450) }
-    after(250) { @text7 = MasterText.create("Chaos Bricks (stub)",   :y => 510) }
+    after(225) { @text6 = MasterText.create("Scheduler",             :y => 450) }
+    after(250) { @text7 = MasterText.create("Ruby Brickland (stub)", :y => 510) }
     after(275) { @text8 = MasterText.create("Chaos Penguin (stub)",  :y => 570) }
   end
 end

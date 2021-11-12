@@ -1,4 +1,6 @@
-require "cyberarm_engine"
+require_relative "lib/draw_circle"
+
+require_relative "cyberarm_engine/lib/cyberarm_engine"
 
 GAME_ROOT_PATH = File.expand_path(".", __dir__)
 
