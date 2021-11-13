@@ -41,7 +41,7 @@ class Arcade < Chingu::Window
                    :x => Peeve,
                    :b => Boxes,
                    :c => :relax,
-                   :n => Scheduler,
+                   :n => SchedulerGame::Window,
                    :m => BricksGame,
                    :k => PenguinGame
                }
