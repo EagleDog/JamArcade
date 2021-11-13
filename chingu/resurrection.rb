@@ -24,7 +24,7 @@ class Resurrection < Chingu::GameState
     @grave_hole = false
     @gem_spot = [540, 530]
     @chunk_y = 550
-    @rand_range = 130
+    @rand_range = 110
     @zord = 10
 
     @gem
@@ -37,8 +37,7 @@ class Resurrection < Chingu::GameState
 #    after(4200) { rupture_earth }
     after(6200) { rupture_earth }
     after(10200) { explode_earth }
-    after(7400) { birth_gem }
-    after(12400) { push_master_menu }
+    after(14400) { push_master_menu }
   end
 
   def rifting
@@ -57,18 +56,17 @@ class Resurrection < Chingu::GameState
   end
 
   def rupture_earth
-    make_chunks
+    make_chunks; shake_chunks; severe_tremble
 #    make_more_chunks
 #    @rift2.destroy!
 #    @rift3.tremble
 #    make_more_chunks
-    shake_chunks
-    severe_tremble
-    after(2000) { make_more_chunks; shake_chunks; severe_tremble }
+    after(1200) { create_gem; shake_gem; make_more_chunks; shake_chunks; severe_tremble  }
+    after(2000) { shake_gem; shake_chunks; severe_tremble }
   end
 
   def explode_earth
-    create_gem
+#    create_gem
     @grave_hole = true
 #    make_more_chunks
     fling_chunks
@@ -83,27 +81,28 @@ class Resurrection < Chingu::GameState
     @rift3.tremble3
   end
 
-  def birth_gem
-  end
-
   def destroy_rifts
-      @rift2.destroy!
-      @rift3.destroy!
-  #   @rifts.each do |rift| rift.destroy end
+    @rift2.destroy!
+    @rift3.destroy!
+    @rift11.destroy!
   end
 
   def create_gem
     @gem = ChinguGem.create(:x => @gem_spot[0], :y => @gem_spot[1], :factor => 0.5, :zorder => @zord + 1)
   end
 
-  def fling_chunks
-    @left_chunks.each do |chunk| chunk.fling(1) end
-    @right_chunks.each do |chunk| chunk.fling(-1) end
+  def shake_gem
+    @gem.shake
   end
 
   def shake_chunks
     @left_chunks.each do |chunk| chunk.shake(1) end
     @right_chunks.each do |chunk| chunk.shake(-1) end
+  end
+
+  def fling_chunks
+    @left_chunks.each do |chunk| chunk.fling(1) end
+    @right_chunks.each do |chunk| chunk.fling(-1) end
   end
 
   def make_chunks

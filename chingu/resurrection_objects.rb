@@ -28,7 +28,7 @@ class Rift < Chingu::GameObject
   end
   def tremble3
     trembling
-    after(1000) { trembling }
+#    after(1000) { trembling }
   end
 
   def trembling
@@ -65,13 +65,13 @@ class Chunk < Chingu::GameObject
       counter += 40
       after(counter) { self.angle -= 5 * dir }
       counter += 40
-      after(counter) { self.angle += 3 * dir }
+      after(counter) { self.angle += 4 * dir }
     }
   end
 
   def shake(dir)
     shaking(dir)
-    after(1000) { shaking(dir) }
+#    after(1000) { shaking(dir) }
   end
 
   def fling(dir)
@@ -98,7 +98,8 @@ class Chunk5 < Chunk; def setup; super; @image = Gosu::Image.new(""+RBPTH+"chunk
 
 
 class ChinguGem < Chingu::GameObject
-  attr_reader :x, :y
+#  attr_reader :x, :y
+  trait :timer
   def setup
     @image = Gosu::Image.new(""+RBPTH + "chingu_gem.png")
     @growing = false
@@ -113,9 +114,19 @@ class ChinguGem < Chingu::GameObject
     @moving = true
   end
 
+  def shake
+    counter = 0
+    5.times {
+      counter += 40
+      after(counter) { self.angle -= 15 }
+      counter += 40
+      after(counter) { self.angle += 15 }
+    }
+  end
+
   def update
     if @growing && @factor < 1.3
-      self.factor += 0.03
+      self.factor += 0.035
     end
     if @moving && self.y > 300
       self.y -= 10
